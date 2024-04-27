@@ -7,11 +7,11 @@ import java.util.List;
 
 @Service
 public class FolderService {
-    private final FolderRepository folderRepository; // Change the variable name to camelCase
+    private final FolderRepository folderRepository;
 
     @Autowired
-    public FolderService(FolderRepository folderRepository) { // Add FolderRepository as a parameter
-        this.folderRepository = folderRepository; // Assign the parameter to the class field
+    public FolderService(FolderRepository folderRepository) {
+        this.folderRepository = folderRepository;
     }
 
     public List<Folder> getAllFolders() {

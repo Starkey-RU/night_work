@@ -1,40 +1,44 @@
 package night_work;
 
+import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.annotation.Bean;
 
 @SpringBootApplication
 public class Application {
 
     public static void main(String[] args) {
         SpringApplication.run(Application.class, args);
-        setupDemo();
     }
 
-    private static void setupDemo() {
-        FolderService folderService = new FolderService();
-        NoteService noteService = new NoteService();
+    @Bean
+    public CommandLineRunner setupDemo(FolderService folderSvc, NoteService noteSvc) {
+        return (args) -> {
+            Folder folderOne = new Folder("Folder 1");
+            folderSvc.createFolder(folderOne);
 
-        Folder folder1 = createFolder("Folder 1", folderService);
-        createNote("Note 1", "Artem Ivanovich", folder1, noteService);
-        createNote("Note 2", "Prostite", folder1, noteService);
+            Note note1 = new Note();
+            note1.setTitle("Note 1");
+            note1.setContent("Artem Ivanovich");
+            note1.setFolder(folderOne);
+            noteSvc.createNote(note1);
 
-        Folder folder2 = createFolder("Folder 2", folderService);
-        createNote("Note 3", "Za opozdanie, ya ne hotel, tak polycilos'", folder2, noteService);
-    }
+            Note note2 = new Note();
+            note2.setTitle("Note 2");
+            note2.setContent("Prostite za opozdanie");
+            note2.setFolder(folderOne);
+            noteSvc.createNote(note2);
 
-    private static Folder createFolder(String name, FolderService service) {
-        Folder folder = new Folder();
-        folder.setName(name);
-        service.createFolder(folder);
-        return folder;
-    }
+            Folder folderTwo = new Folder("Folder 2");
+            folderSvc.createFolder(folderTwo);
 
-    private static void createNote(String title, String content, Folder folder, NoteService service) {
-        Note note = new Note();
-        note.setTitle(title);
-        note.setContent(content);
-        note.setFolder(folder);
-        service.createNote(note);
+
+            Note note3 = new Note();
+            note3.setTitle("Note 3");
+            note3.setContent("Ne stav'te neattestaciy :(");
+            note3.setFolder(folderTwo);
+            noteSvc.createNote(note3);
+        };
     }
 }
