@@ -7,6 +7,6 @@ import org.springframework.stereotype.Repository;
 //more in future.
 
 @Repository
-public interface folder_repository extends JpaRepository<Folder, Long> {
+public interface FolderRepository extends JpaRepository<Folder, Long> {
     // а зачем?
 }

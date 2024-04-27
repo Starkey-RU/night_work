@@ -7,26 +7,26 @@ import java.util.List;
 
 @Service
 public class FolderService {
-    private final folder_repository FolderRepository;
+    private final FolderRepository folderRepository; // Change the variable name to camelCase
 
     @Autowired
-    public FolderService(folder_repository folderRepository) {
-        this.FolderRepository = folderRepository;
+    public FolderService(FolderRepository folderRepository) { // Add FolderRepository as a parameter
+        this.folderRepository = folderRepository; // Assign the parameter to the class field
     }
 
     public List<Folder> getAllFolders() {
-        return FolderRepository.findAll();
+        return folderRepository.findAll();
     }
 
     public Folder createFolder(Folder folder) {
-        return FolderRepository.save(folder);
+        return folderRepository.save(folder);
     }
 
     public Folder getFolderById(Long id) {
-        return FolderRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Folder not found with id: " + id));
+        return folderRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Folder not found with id: " + id));
     }
 
     public void deleteFolder(Long id) {
-        FolderRepository.deleteById(id);
+        folderRepository.deleteById(id);
     }
 }
